@@ -62,6 +62,7 @@ public class TopicoController {
         return ResponseEntity.created(uri).body(new TopicosDto(topico));
     }
 
+    @GetMapping("/{id}")
     public DetalhesDoTopicosDTO detalhar(@PathVariable Long id){
         Topico topico = topicosRepository.getReferenceById(id);
         return new DetalhesDoTopicosDTO(topico);
