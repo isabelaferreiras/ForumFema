@@ -96,6 +96,14 @@ public class Topico {
         this.curso = curso;
     }
 
+    public List<Resposta> getRespostas() {
+        return respostas;
+    }
+
+    public void setRespostas(List<Resposta> respostas) {
+        this.respostas = respostas;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,8 +1,8 @@
 package br.edu.fema.forum.ForumFema.controller;
 
+import br.edu.fema.forum.ForumFema.controller.dto.DetalhesDoTopicosDTO;
 import br.edu.fema.forum.ForumFema.controller.dto.TopicosDto;
 import br.edu.fema.forum.ForumFema.controller.dto.TopicosForm;
-import br.edu.fema.forum.ForumFema.domain.Curso;
 import br.edu.fema.forum.ForumFema.domain.StatusTopico;
 import br.edu.fema.forum.ForumFema.domain.Topico;
 import br.edu.fema.forum.ForumFema.repository.CursoRepository;
@@ -11,13 +11,10 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -65,4 +62,8 @@ public class TopicoController {
         return ResponseEntity.created(uri).body(new TopicosDto(topico));
     }
 
+    public DetalhesDoTopicosDTO detalhar(@PathVariable Long id){
+        Topico topico = topicosRepository.getReferenceById(id);
+        return new DetalhesDoTopicosDTO(topico);
+    }
 }
