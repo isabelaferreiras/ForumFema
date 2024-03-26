@@ -1,4 +1,4 @@
-package br.edu.fema.forum.ForumFema.controller.dto;
+package br.edu.fema.forum.ForumFema.config.validacao;
 
 public class ErroFormularioDto {
 

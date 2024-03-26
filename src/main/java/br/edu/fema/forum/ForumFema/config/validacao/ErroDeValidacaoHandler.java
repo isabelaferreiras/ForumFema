@@ -1,6 +1,6 @@
-package br.edu.fema.forum.ForumFema.controller;
+package br.edu.fema.forum.ForumFema.config.validacao;
 
-import br.edu.fema.forum.ForumFema.controller.dto.ErroFormularioDto;
+import br.edu.fema.forum.ForumFema.config.validacao.ErroFormularioDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;

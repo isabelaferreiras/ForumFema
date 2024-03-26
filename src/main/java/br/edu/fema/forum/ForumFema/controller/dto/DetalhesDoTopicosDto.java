@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class DetalhesDoTopicosDTO {
+public class DetalhesDoTopicosDto {
 
     private Long id;
     private String titulo;
@@ -17,7 +17,7 @@ public class DetalhesDoTopicosDTO {
     private LocalDateTime dataCriacao;
     private StatusTopico status;
     private String nomeAutor;
-    private List<RespostaDTO> respostas;
+    private List<RespostaDto> respostas;
 
     public Long getId() {
         return id;
@@ -43,11 +43,11 @@ public class DetalhesDoTopicosDTO {
         return nomeAutor;
     }
 
-    public List<RespostaDTO> getRespostas() {
+    public List<RespostaDto> getRespostas() {
         return respostas;
     }
 
-    public DetalhesDoTopicosDTO(Topico topico){
+    public DetalhesDoTopicosDto(Topico topico){
         this.id = topico.getId();
         this.titulo = topico.getTitulo();
         this.mensagem = topico.getMensagem();
@@ -55,14 +55,14 @@ public class DetalhesDoTopicosDTO {
         this.status = topico.getStatus();
         this.nomeAutor = topico.getAutor().getNome();
         this.respostas = new ArrayList<>();
-        this.respostas.addAll(topico.getRespostas().stream().map(RespostaDTO::new).collect(Collectors.toList()));
+        this.respostas.addAll(topico.getRespostas().stream().map(RespostaDto::new).collect(Collectors.toList()));
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DetalhesDoTopicosDTO that = (DetalhesDoTopicosDTO) o;
+        DetalhesDoTopicosDto that = (DetalhesDoTopicosDto) o;
         return id.equals(that.id);
     }
 

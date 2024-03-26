@@ -1,6 +1,6 @@
 package br.edu.fema.forum.ForumFema.controller;
 
-import br.edu.fema.forum.ForumFema.controller.dto.DetalhesDoTopicosDTO;
+import br.edu.fema.forum.ForumFema.controller.dto.DetalhesDoTopicosDto;
 import br.edu.fema.forum.ForumFema.controller.dto.TopicosDto;
 import br.edu.fema.forum.ForumFema.controller.dto.TopicosForm;
 import br.edu.fema.forum.ForumFema.domain.StatusTopico;
@@ -63,8 +63,8 @@ public class TopicoController {
     }
 
     @GetMapping("/{id}")
-    public DetalhesDoTopicosDTO detalhar(@PathVariable Long id){
+    public DetalhesDoTopicosDto detalhar(@PathVariable Long id){
         Topico topico = topicosRepository.getReferenceById(id);
-        return new DetalhesDoTopicosDTO(topico);
+        return new DetalhesDoTopicosDto(topico);
     }
 }

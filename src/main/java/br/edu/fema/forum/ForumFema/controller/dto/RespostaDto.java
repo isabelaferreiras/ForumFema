@@ -6,7 +6,7 @@ import br.edu.fema.forum.ForumFema.domain.Resposta;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class RespostaDTO {
+public class RespostaDto {
     private Long id;
     private String mensagem;
     private LocalDateTime dataCriacao;
@@ -28,7 +28,7 @@ public class RespostaDTO {
         return nomeAutor;
     }
 
-    public RespostaDTO(Resposta resposta) {
+    public RespostaDto(Resposta resposta) {
         this.id = resposta.getId();
         this.mensagem = resposta.getMensagem();
         this.dataCriacao = resposta.getDataCriacao();
@@ -39,7 +39,7 @@ public class RespostaDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RespostaDTO that = (RespostaDTO) o;
+        RespostaDto that = (RespostaDto) o;
         return id.equals(that.id);
     }
 
