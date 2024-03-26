@@ -9,7 +9,8 @@ import org.hibernate.validator.constraints.Length;
 import java.util.Objects;
 
 public class AtualizacaoTopicoForm {
-    //essa classe serve para mostrar pro cliente as informações que ele pode atualizar depois de já tê-las criado
+    //essa classe serve para limitar ao cliente as informações que ele pode atualizar depois de já tê-las criado,
+    // no caso aqui apenas título e mensagem do tópico
 
     @NotNull
     @NotEmpty
