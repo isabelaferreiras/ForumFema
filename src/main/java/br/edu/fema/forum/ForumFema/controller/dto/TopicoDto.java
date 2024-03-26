@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class TopicosDto {
+public class TopicoDto {
     private Long id;
     private String titulo;
     private String mensagem;
@@ -33,7 +33,7 @@ public class TopicosDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TopicosDto that = (TopicosDto) o;
+        TopicoDto that = (TopicoDto) o;
         return Objects.equals(id, that.id);
     }
 
@@ -42,7 +42,7 @@ public class TopicosDto {
         return Objects.hash(id);
     }
 
-    public TopicosDto(Topico topico){
+    public TopicoDto(Topico topico){
         super();
         this.id = topico.getId();
         this.titulo = topico.getTitulo();
@@ -50,8 +50,8 @@ public class TopicosDto {
         this.dataCriacao = topico.getDataCriacao();
     }
 
-    public static List<TopicosDto> converter(List<Topico> topicos) {
-        return topicos.stream().map(TopicosDto::new).collect(Collectors.toList());
+    public static List<TopicoDto> converter(List<Topico> topicos) {
+        return topicos.stream().map(TopicoDto::new).collect(Collectors.toList());
     }
 
 }

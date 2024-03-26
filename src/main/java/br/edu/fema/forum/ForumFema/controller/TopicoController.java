@@ -1,8 +1,9 @@
 package br.edu.fema.forum.ForumFema.controller;
 
+import br.edu.fema.forum.ForumFema.controller.dto.AtualizacaoTopicoForm;
 import br.edu.fema.forum.ForumFema.controller.dto.DetalhesDoTopicosDto;
-import br.edu.fema.forum.ForumFema.controller.dto.TopicosDto;
-import br.edu.fema.forum.ForumFema.controller.dto.TopicosForm;
+import br.edu.fema.forum.ForumFema.controller.dto.TopicoDto;
+import br.edu.fema.forum.ForumFema.controller.dto.TopicoForm;
 import br.edu.fema.forum.ForumFema.domain.StatusTopico;
 import br.edu.fema.forum.ForumFema.domain.Topico;
 import br.edu.fema.forum.ForumFema.repository.CursoRepository;
@@ -28,7 +29,7 @@ public class TopicoController {
     private CursoRepository cursoRepository;
 
     @GetMapping
-    public List<TopicosDto> listaNome(String cursoNome, StatusTopico statusCurso) {
+    public List<TopicoDto> listaNome(String cursoNome, StatusTopico statusCurso) {
 
         List<Topico> topicos = null;
         if (cursoNome != null) {
@@ -38,33 +39,40 @@ public class TopicoController {
         } else {
             topicos = topicosRepository.findAll();
         }
-            return TopicosDto.converter(topicos);
+            return TopicoDto.converter(topicos);
     }
 
     @GetMapping("/status")
-    public List<TopicosDto> listaS(StatusTopico status){
+    public List<TopicoDto> listaS(StatusTopico status){
         if (status == null){
             List<Topico> topicos = topicosRepository.findAll();
-            return TopicosDto.converter(topicos);
+            return TopicoDto.converter(topicos);
         } else {
             List<Topico> topicos = topicosRepository.findByStatus(status);
-            return  TopicosDto.converter(topicos);
+            return  TopicoDto.converter(topicos);
         }
     }
 
     @PostMapping
     @Transactional
-    public ResponseEntity<TopicosDto> cadastrar(@RequestBody @Valid TopicosForm form, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Valid TopicoForm form, UriComponentsBuilder uriBuilder){
         Topico topico = form.converter(cursoRepository);
         topicosRepository.save(topico);
 
         URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
-        return ResponseEntity.created(uri).body(new TopicosDto(topico));
+        return ResponseEntity.created(uri).body(new TopicoDto(topico));
     }
 
     @GetMapping("/{id}")
     public DetalhesDoTopicosDto detalhar(@PathVariable Long id){
         Topico topico = topicosRepository.getReferenceById(id);
         return new DetalhesDoTopicosDto(topico);
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm form){
+        Topico topico = form.atualizar(id,topicosRepository);
+        return ResponseEntity.ok(new TopicoDto(topico));
     }
 }

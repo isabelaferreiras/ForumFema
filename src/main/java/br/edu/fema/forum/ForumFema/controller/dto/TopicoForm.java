@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.Length;
 
 import java.util.Objects;
 
-public class TopicosForm {
+public class TopicoForm {
 
     @NotNull
     @NotEmpty
@@ -39,7 +39,7 @@ public class TopicosForm {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TopicosForm that = (TopicosForm) o;
+        TopicoForm that = (TopicoForm) o;
         return titulo.equals(that.titulo);
     }
 

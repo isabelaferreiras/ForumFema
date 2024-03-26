@@ -1,6 +1,7 @@
 package br.edu.fema.forum.ForumFema.controller;
 
 
+import br.edu.fema.forum.ForumFema.controller.dto.AtualizacaoCursoForm;
 import br.edu.fema.forum.ForumFema.controller.dto.CursoDto;
 import br.edu.fema.forum.ForumFema.controller.dto.CursosForm;
 import br.edu.fema.forum.ForumFema.domain.Curso;
@@ -40,6 +41,10 @@ public class CursoController {
         return ResponseEntity.created(uri).body(new CursoDto(curso));
     }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<CursoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoCursoForm form){
+        Curso curso = form.atualizar(id, cursoRepository);
+        return ResponseEntity.ok(new CursoDto(curso));
+    }
 
 }
