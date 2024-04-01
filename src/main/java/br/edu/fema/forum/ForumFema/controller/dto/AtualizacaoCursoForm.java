@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class AtualizacaoCursoForm {
     //essa classe serve para limitar ao cliente as informações que ele pode atualizar depois de já tê-las criado,
-    // no caso aqui apenas nome do cu
+    // no caso aqui apenas nome do curso
 
     @NotNull
     @NotEmpty
