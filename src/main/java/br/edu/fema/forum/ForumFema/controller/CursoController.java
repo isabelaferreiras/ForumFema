@@ -9,6 +9,7 @@ import br.edu.fema.forum.ForumFema.repository.CursoRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
@@ -42,9 +43,17 @@ public class CursoController {
     }
 
     @PutMapping("/{id}")
+    @Transactional
     public ResponseEntity<CursoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoCursoForm form){
         Curso curso = form.atualizar(id, cursoRepository);
         return ResponseEntity.ok(new CursoDto(curso));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> remover(@PathVariable Long id) {
+            cursoRepository.deleteById(id);
+            return ResponseEntity.ok().build();
     }
 
 }

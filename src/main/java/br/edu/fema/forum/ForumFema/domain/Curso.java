@@ -1,10 +1,8 @@
 package br.edu.fema.forum.ForumFema.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -15,6 +13,9 @@ public class Curso {
     private long id;
     private String nome;
     private String categoria;
+
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Topico> topicos;
 
     public Curso() {
     }
@@ -48,6 +49,13 @@ public class Curso {
         return categoria;
     }
 
+    public List<Topico> getTopicos() {
+        return topicos;
+    }
+
+    public void setTopicos(List<Topico> topicos) {
+        this.topicos = topicos;
+    }
 
     @Override
     public boolean equals(Object o) {
