@@ -8,6 +8,7 @@ import br.edu.fema.forum.ForumFema.domain.Curso;
 import br.edu.fema.forum.ForumFema.repository.CursoRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.apache.commons.lang3.text.translate.NumericEntityUnescaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/cursos")
@@ -45,15 +47,25 @@ public class CursoController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<CursoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoCursoForm form){
-        Curso curso = form.atualizar(id, cursoRepository);
-        return ResponseEntity.ok(new CursoDto(curso));
+        Optional<Curso> optional = cursoRepository.findById(id);
+        if (optional.isPresent()){
+            Curso curso = form.atualizar(id, cursoRepository);
+            return ResponseEntity.ok(new CursoDto(curso));
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> remover(@PathVariable Long id) {
-            cursoRepository.deleteById(id);
-            return ResponseEntity.ok().build();
+            Optional<Curso> optional = cursoRepository.findById(id);
+            if (optional.isPresent()){
+                cursoRepository.deleteById(id);
+                return ResponseEntity.ok().build();
+            }
+
+            return ResponseEntity.notFound().build();
     }
 
 }
