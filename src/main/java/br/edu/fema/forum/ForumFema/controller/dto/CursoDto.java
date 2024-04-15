@@ -1,6 +1,7 @@
 package br.edu.fema.forum.ForumFema.controller.dto;
 
 import br.edu.fema.forum.ForumFema.domain.Curso;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Objects;

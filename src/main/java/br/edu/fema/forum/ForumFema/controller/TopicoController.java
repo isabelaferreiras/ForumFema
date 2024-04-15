@@ -11,6 +11,9 @@ import br.edu.fema.forum.ForumFema.repository.TopicosRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -30,29 +33,25 @@ public class TopicoController {
     private CursoRepository cursoRepository;
 
     @GetMapping
-    public List<TopicoDto> listaNome(String cursoNome, StatusTopico statusCurso) {
+    public Page<TopicoDto> lista(@RequestParam(required = false) String nomeCurso,
+                                 @RequestParam(required = false) StatusTopico status,
+                                 @RequestParam int pagina,
+                                 @RequestParam int qtd){
 
-        List<Topico> topicos = null;
-        if (cursoNome != null) {
-            topicos = topicosRepository.findByCursoNome(cursoNome);
-        } else if (statusCurso != null) {
-            topicos = topicosRepository.findByStatus(statusCurso);
+        Pageable paginacao = PageRequest.of(pagina, qtd);
+
+        Page<Topico> topicos = null;
+
+        if (nomeCurso != null){
+            topicos = topicosRepository.findByCursoNome(nomeCurso, paginacao);
+        } else if (status != null){
+            topicos = topicosRepository.findByStatus(status, paginacao);
         } else {
-            topicos = topicosRepository.findAll();
+            topicos = topicosRepository.findAll(paginacao);
         }
-            return TopicoDto.converter(topicos);
+        return TopicoDto.converter(topicos);
     }
 
-    @GetMapping("/status")
-    public List<TopicoDto> listaS(StatusTopico status){
-        if (status == null){
-            List<Topico> topicos = topicosRepository.findAll();
-            return TopicoDto.converter(topicos);
-        } else {
-            List<Topico> topicos = topicosRepository.findByStatus(status);
-            return  TopicoDto.converter(topicos);
-        }
-    }
 
     @PostMapping
     @Transactional
