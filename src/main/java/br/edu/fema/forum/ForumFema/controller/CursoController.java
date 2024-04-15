@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +32,12 @@ public class CursoController {
     private CursoRepository cursoRepository;
 
     @GetMapping
-    public List<CursoDto> lista(){
+    public Page<CursoDto> lista(@RequestParam int pagina,
+                                @RequestParam int qtde,
+                                @RequestParam String ordenacao){
+        Pageable paginacao = PageRequest.of(pagina, qtde, Sort.Direction.ASC, ordenacao);
 
-        List<Curso> cursos = cursoRepository.findAll();
+        Page<Curso> cursos = cursoRepository.findAll(paginacao);
         return CursoDto.converter(cursos);
     }
 

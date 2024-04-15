@@ -18,8 +18,8 @@ public class CursoDto {
         this.nome = curso.getNome();
     }
 
-    public static List<CursoDto> converter(List<Curso> cursos){
-        return cursos.stream().map(CursoDto::new).collect(Collectors.toList());
+    public static Page<CursoDto> converter(Page<Curso> cursos){
+        return cursos.map(CursoDto::new);
     }
 
     public long getId() {
