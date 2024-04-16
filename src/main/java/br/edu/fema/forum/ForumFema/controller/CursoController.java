@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.apache.commons.lang3.text.translate.NumericEntityUnescaper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +35,7 @@ public class CursoController {
     private CursoRepository cursoRepository;
 
     @GetMapping
+    @Cacheable(value = "ListaDeCursos")
     public Page<CursoDto> lista(@PageableDefault(sort = "id", direction = Sort.Direction.DESC, page = 0, size = 10) Pageable paginacao){
 
         Page<Curso> cursos = cursoRepository.findAll(paginacao);
@@ -41,6 +44,7 @@ public class CursoController {
 
     @PostMapping
     @Transactional
+    @CacheEvict(value = "ListaDeCursos", allEntries = true)
     public ResponseEntity<CursoDto> cadastrar(@RequestBody @Valid CursosForm form, UriComponentsBuilder uriBuilder){
         Curso curso = form.converter();
         cursoRepository.save(curso);
@@ -51,6 +55,7 @@ public class CursoController {
 
     @PutMapping("/{id}")
     @Transactional
+    @CacheEvict(value = "ListaDeCursos", allEntries = true)
     public ResponseEntity<CursoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoCursoForm form){
         Optional<Curso> optional = cursoRepository.findById(id);
         if (optional.isPresent()){
@@ -63,6 +68,7 @@ public class CursoController {
 
     @DeleteMapping("/{id}")
     @Transactional
+    @CacheEvict(value = "ListaDeCursos", allEntries = true)
     public ResponseEntity<?> remover(@PathVariable Long id) {
             Optional<Curso> optional = cursoRepository.findById(id);
             if (optional.isPresent()){
