@@ -1,6 +1,6 @@
 package br.edu.fema.forum.ForumFema.domain;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.util.List;
 import java.util.Objects;

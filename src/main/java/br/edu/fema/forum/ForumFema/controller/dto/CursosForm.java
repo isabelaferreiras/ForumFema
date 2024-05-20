@@ -1,8 +1,8 @@
 package br.edu.fema.forum.ForumFema.controller.dto;
 
 import br.edu.fema.forum.ForumFema.domain.Curso;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.Objects;
