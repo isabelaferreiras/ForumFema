@@ -1,6 +1,7 @@
 package br.edu.fema.forum.ForumFema.config.security;
 
 import br.edu.fema.forum.ForumFema.domain.Usuario;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.Authentication;
@@ -32,5 +33,18 @@ public class TokenService {
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
 
+    }
+    public boolean isTokenValido(String token) {
+        try {
+            Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public Long getIdUsuario(String token) {
+        Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
+        return Long.parseLong(claims.getSubject());
     }
 }
